@@ -1,22 +1,19 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation'
-import { 
-   MapContainer, TileLayer, Polygon, useMapEvents, Marker, Popup 
-} from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, } from 'react-leaflet';
 
-import {statesData} from  '../../brasil';
-import Link from 'next/link';
+import {statesData} from  "../../brasil";
 
-
+import {LatLngExpression} from 'leaflet/index'
 
 export default function Mapa() {
    const router = useRouter()
 
-   const center = [-15.7801, -47.9292]
+   const center: LatLngExpression = [-15.7801, -47.9292]
 
-   const handleClickInsidePolygon = () => {
-      router.push('/estado');   
-   };
+   const handleClickInsidePolygon = (state: String) => {
+      router.push(`/estado/${state}`);   
+   }
 
    return (
       <MapContainer
@@ -31,7 +28,7 @@ export default function Mapa() {
       />
       {
          statesData.features.map((state) => {
-         const coordinates = state.geometry.coordinates[0][0].map((item) => [item[1], item[0]]);
+         const coordinates: LatLngExpression[] = state.geometry.coordinates[0][0].map((item) => [item[1], item[0]]);
    
          return (
          <Polygon
@@ -41,20 +38,20 @@ export default function Mapa() {
                fillOpacity: 1,
                weight: 2,
                opacity: 1,
-               dashArray: 3,
+               dashArray: '3',
                color: 'white'
             }}
-            positions={coordinates}
+            positions={[coordinates]}
             eventHandlers={{
                mouseover: (e) => {
                const layer = e.target;
                layer.setStyle({
-                  dashArray: "",
-                  fillColor: "#BD0026",
+                  dashArray: '',
+                  fillColor: '#BD0026',
                   fillOpacity: 0.7,
                   weight: 2,
                   opacity: 1,
-                  color: "white",
+                  color: 'white',
                })
                },
                mouseout: (e) => {
@@ -67,7 +64,7 @@ export default function Mapa() {
                   fillColor: '#FD8D3C'
                });
                },
-               click: handleClickInsidePolygon()
+               click: () => handleClickInsidePolygon(state.properties.sigla)
             }}
          />)
          })
