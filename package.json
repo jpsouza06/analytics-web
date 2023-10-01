@@ -6,23 +6,34 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint --fix --ext .tsx ."
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.11",
+    "@mui/material": "^5.14.11",
+    "@mui/x-data-grid": "^6.16.0",
+    "dayjs": "^1.11.10",
     "leaflet": "^1.9.4",
-    "next": "latest",
+    "next": "^13.5.3",
     "react": "latest",
     "react-dom": "latest",
     "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.6",
+    "@types/next": "^9.0.0",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "eslint-plugin-react": "^7.33.2",
     "postcss": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
