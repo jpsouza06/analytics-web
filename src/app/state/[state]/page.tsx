@@ -9,6 +9,7 @@ export default async function State({params}: {params : {state: string}}) {
 	return (
 		<>
 			<Grid systemStarted={(await data).systemStarted}/>
+			
 			{/* <button 
 				onClick={() => {
 					if (page != 1) {

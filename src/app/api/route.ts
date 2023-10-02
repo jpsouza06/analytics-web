@@ -18,9 +18,9 @@ export async function POST(state: string, page: number) {
 						// 	createdAt: 'desc'
 						// }
 					}),
-				next: { revalidate: 5 },
+				next: { revalidate: 60 },
 			})
-	
+			
 	const data: SystemStartedResponse = await res.json()
 	data.systemStarted.forEach(item => 
 		item.createdAt = dayjs(item.createdAt).format('DD/MM/YYYY')	

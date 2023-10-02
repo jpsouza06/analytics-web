@@ -12,14 +12,22 @@ export default function Map() {
 	const center: LatLngExpression = [-15.7801, -47.9292]
 
 	const handleClickInsidePolygon = (state: string) => {
-		router.push(`/state/${state}`)   
+		console.log(state)
+		router.push('/state/PA')   
 	}
 
 	return (
 		<MapContainer
 			center={center}
-			zoom={5}
-			style={{ width: '100vw', height: '100vh' }}
+			zoom={4}
+			style={
+				{ 
+					width: '90%', 
+					maxHeight: '600px', 
+					height:'90%', 
+					margin: '20px auto',
+					filter: 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.5))'
+				}}
 			scrollWheelZoom={false}
 		>
 			<TileLayer
@@ -70,6 +78,6 @@ export default function Map() {
 				})
 			}
 		</MapContainer>
-  
+
 	)
 }
