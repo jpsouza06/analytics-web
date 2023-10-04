@@ -1,5 +1,4 @@
-
-import { SystemStartedResponse } from '@/interface/system-started'
+import { ISystemStartedResponse } from '@/interface/system-started'
 import dayjs from 'dayjs'
 
 export async function POST(state: string, page: number) {
@@ -20,12 +19,24 @@ export async function POST(state: string, page: number) {
 					}),
 				next: { revalidate: 60 },
 			})
-			
-	const data: SystemStartedResponse = await res.json()
+
+	if (res.status !== 200) {
+		const data = {
+			systemStarted: []
+		}
+
+		return {
+			data
+		}
+	}
+
+	const data: ISystemStartedResponse = await res.json()
+	
 	data.systemStarted.forEach(item => 
 		item.createdAt = dayjs(item.createdAt).format('DD/MM/YYYY')	
 	)
 
-	return data
+	return {
+		data
+	}
 }
-

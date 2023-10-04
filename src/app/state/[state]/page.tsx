@@ -5,25 +5,14 @@ import React from 'react'
 
 export default async function State({params}: {params : {state: string}}) {
 	const page = 1
-	const data = POST(params.state, page)
+	
+	const {data} = await POST(params.state, page)
+
 	return (
 		<>
-			<Grid systemStarted={(await data).systemStarted}/>
-			
-			{/* <button 
-				onClick={() => {
-					if (page != 1) {
-						page - 1
-					}
-				}}
-			>
-				Anterior
-			</button>
-			<button 
-				onClick={() => setPage(page + 1)}
-			>
-				Proximo
-			</button> */}
+			<div className="bg-red-700  mx-auto mt-15 w-full">
+				<Grid systemStarted={data.systemStarted}/>
+			</div>		
 		</>
 	)
 }

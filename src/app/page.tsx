@@ -1,21 +1,14 @@
 'use client'
 import React from 'react'
 import 'leaflet/dist/leaflet.css'
-import Map from '@/components/map'
-import Sidebar from '@/components/Sidebar'
+import BrasilMap from '@/components/Mapa/brasilMap'
 
 export default function HomePage() {
 	return (
-		<>
-			<div className='flex'>		
-				<Sidebar />
-				<div className="bg-red-700  mx-auto mt-15 w-full">
-					<Map  />
-				</div>
+		<>	
+			<div style={{width: '400px', height: '400px'}}>
+				<BrasilMap center={[-15.7801, -52.9292]} zoom={3} mapInteraction={false}/>
 			</div>
-			
-
-
 		</>
 	)
 }

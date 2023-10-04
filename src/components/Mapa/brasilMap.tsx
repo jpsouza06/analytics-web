@@ -1,34 +1,40 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { MapContainer, TileLayer, Polygon, } from 'react-leaflet'
+import { MapContainer, TileLayer, Polygon, Tooltip, } from 'react-leaflet'
 
-import {statesData} from  '../../brasil'
+import {statesData} from  '../../../brasil'
 
 import {LatLngExpression} from 'leaflet/index'
 
-export default function Map() {
+import './map.css'
+
+export default function BrasilMap({center, zoom, mapInteraction}: {center: LatLngExpression, zoom: number, mapInteraction: boolean}) {
 	const router = useRouter()
 
-	const center: LatLngExpression = [-15.7801, -47.9292]
-
 	const handleClickInsidePolygon = (state: string) => {
-		console.log(state)
-		router.push('/state/PA')   
+		router.push(`/state/${state}`)   
 	}
 
 	return (
 		<MapContainer
 			center={center}
-			zoom={4}
+			zoom={zoom}
 			style={
 				{ 
-					width: '90%', 
-					maxHeight: '600px', 
-					height:'90%', 
+					width: '80%', 
+					height:'80%', 
 					margin: '20px auto',
-					filter: 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.5))'
+					filter: 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.3))',
+					borderRadius: '5px',
+
 				}}
-			scrollWheelZoom={false}
+			scrollWheelZoom={mapInteraction}
+			zoomControl={mapInteraction}
+			boxZoom={mapInteraction}
+			touchZoom={mapInteraction}
+			dragging={mapInteraction}
+			doubleClickZoom={mapInteraction}
+			keyboard={mapInteraction}
 		>
 			<TileLayer
 				url="https://api.maptiler.com/maps/basic-v2-light/256/{z}/{x}/{y}.png?key=ZJDCwfo7bqyrgt3IlPMK"
@@ -40,6 +46,7 @@ export default function Map() {
    
 					return (
 						<Polygon
+							className="no-focus"
 							key={state.properties.id}
 							pathOptions={{
 								fillColor: '#FD8D3C',
@@ -47,34 +54,16 @@ export default function Map() {
 								weight: 2,
 								opacity: 1,
 								dashArray: '3',
-								color: 'white'
+								color: 'white',
 							}}
 							positions={[coordinates]}
 							eventHandlers={{
-								mouseover: (e) => {
-									const layer = e.target
-									layer.setStyle({
-										dashArray: '',
-										fillColor: '#BD0026',
-										fillOpacity: 0.7,
-										weight: 2,
-										opacity: 1,
-										color: 'white',
-									})
-								},
-								mouseout: (e) => {
-									const layer = e.target
-									layer.setStyle({
-										fillOpacity: 1,
-										weight: 2,
-										dashArray: '3',
-										color: 'white',
-										fillColor: '#FD8D3C'
-									})
-								},
 								click: () => handleClickInsidePolygon(state.properties.sigla)
 							}}
-						/>)
+						>
+							<Tooltip sticky>{state.properties.sigla}</Tooltip> 
+						</Polygon>
+					)
 				})
 			}
 		</MapContainer>

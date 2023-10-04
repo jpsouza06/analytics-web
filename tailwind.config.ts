@@ -15,14 +15,15 @@ const config: Config = {
 			},
 		},
 		fontFamily: {
-			roboto: ['Roboto', 'sans-serif'],
+			inter: ['Inter', 'sans-serif'],
 		},
 		dropShadow: {
 			'drop-shadow-50': 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.5))'
 		},
 		colors: {
-			'red-700': '#581616',
-			'gray-100': '#DADCE0'
+			'red-700': '#871812',
+			'white': '#ffffff',
+			'gray-100': '#CCCCCC'
 		}
 	},
 	plugins: [],
