@@ -34,6 +34,13 @@ const columns:GridColDef[] = [
 		width: 150,
 		sortable: false,
 		disableColumnMenu: true
+	},
+	{
+		field: 'createdAt',
+		headerName: 'Ultimo Acesso',
+		width: 150,
+		sortable: false,
+		disableColumnMenu: true
 	}
 ]
 
@@ -85,10 +92,11 @@ export default function Grid({systemStarted}: ISystemStartedResponse) {
 				disableRowSelectionOnClick
 				disableColumnFilter
 				sx={{
-					alignContent: 'center',
+					alignItems: 'center',
 					backgroundColor: '#ffffff',
 					borderColor: 'black',
-					'--DataGrid-overlayHeight': '300px'
+					'--DataGrid-overlayHeight': '300px',
+					width: '800px'
 				}}
 			/>
 		</Box>

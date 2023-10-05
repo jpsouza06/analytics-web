@@ -1,12 +1,19 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import React, {Suspense} from 'react'
+import { Inter } from 'next/font/google'
 import Sidebar from '@/components/Sidebar'
 import Loading from './loading'
 
 export const metadata: Metadata = {
 	title: process.env.SITE_NAME,
 }
+
+const inter = Inter({
+	subsets: ['latin'],
+	display: 'swap',
+})
+  
 
 export default async function RootLayout({
 	children,
@@ -15,7 +22,7 @@ export default async function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className='flex'>
+			<body className={`${inter.className} flex`}>
 				<Sidebar />	
 				<Suspense fallback={<Loading />}>								
 					<div className="bg-red-700 mx-auto mt-15 w-full">

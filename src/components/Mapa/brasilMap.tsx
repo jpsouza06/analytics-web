@@ -21,12 +21,9 @@ export default function BrasilMap({center, zoom, mapInteraction}: {center: LatLn
 			zoom={zoom}
 			style={
 				{ 
-					width: '80%', 
-					height:'80%', 
-					margin: '20px auto',
-					filter: 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.3))',
-					borderRadius: '5px',
-
+					width: '100%', 
+					height:'100%',
+					border: '1px solid #00000010 '
 				}}
 			scrollWheelZoom={mapInteraction}
 			zoomControl={mapInteraction}
@@ -61,7 +58,7 @@ export default function BrasilMap({center, zoom, mapInteraction}: {center: LatLn
 								click: () => handleClickInsidePolygon(state.properties.sigla)
 							}}
 						>
-							<Tooltip sticky>{state.properties.sigla}</Tooltip> 
+							<Tooltip sticky>{state.properties.name}</Tooltip> 
 						</Polygon>
 					)
 				})
