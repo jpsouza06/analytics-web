@@ -31,14 +31,7 @@ const columns:GridColDef[] = [
 	{
 		field: 'createdAt',
 		headerName: 'Ultimo Acesso',
-		width: 150,
-		sortable: false,
-		disableColumnMenu: true
-	},
-	{
-		field: 'createdAt',
-		headerName: 'Ultimo Acesso',
-		width: 150,
+		width: 115,
 		sortable: false,
 		disableColumnMenu: true
 	}
