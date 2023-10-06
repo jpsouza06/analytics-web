@@ -71,7 +71,7 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 export default function Grid({systemStarted}: ISystemStartedResponse) {  
 	return (
 		<Box sx={{ 
-			width: '70%', 
+			maxWidth: '880px', 
 			margin: '0 auto',
 			marginTop: '50px',
 			marginBottom: '50px'
@@ -96,7 +96,7 @@ export default function Grid({systemStarted}: ISystemStartedResponse) {
 					backgroundColor: '#ffffff',
 					borderColor: 'black',
 					'--DataGrid-overlayHeight': '300px',
-					width: '800px'
+					width: '90%'
 				}}
 			/>
 		</Box>

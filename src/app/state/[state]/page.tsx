@@ -11,13 +11,13 @@ export default async function State({params}: {params : {state: string}}) {
 
 	return (
 		<>
-			<div className="bg-red-700  mx-auto mt-15 w-full">
+			<div className="bg-red-700 mx-auto mt-15 w-full ">
 				<Grid systemStarted={data.systemStarted}/>
 			</div>		
 		</>
 	)
 }
-
+ 
 async function POST(state: string, page: number) {
 	const response = 
 		await fetch(`${process.env.API_BASE_URL}/system-started/query/${page}`, 

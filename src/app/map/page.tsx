@@ -1,7 +1,11 @@
 'use client'
 import React from 'react'
 import 'leaflet/dist/leaflet.css'
-import BrasilMap from '@/components/Mapa/brasilMap'
+import dynamic from 'next/dynamic'
+
+const BrasilMap = dynamic(() => import('@/components/Mapa/brasilMap'), {
+	ssr: false 
+})
 
 export default function Map() {
 	return (
