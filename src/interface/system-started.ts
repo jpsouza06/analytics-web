@@ -14,7 +14,7 @@ export interface IFindSystemStartedQuery {
 }
 
 export interface ISystemStartedResponse {
-	systemStarted: {
+
 		systemStarted: [
 			{
 				id: string
@@ -25,7 +25,7 @@ export interface ISystemStartedResponse {
 			}
 		] | [],
 		total: number
-	}
+	
 }
 
 export interface ISystemStartedCountByStateResponse {

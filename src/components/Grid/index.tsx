@@ -66,8 +66,13 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 		fill: theme.palette.mode === 'light' ? '#f5f5f5' : '#fff',
 	},
 }))
+
+interface GridProps {
+	systemStarted: ISystemStartedResponse;
+	page: number;
+}
  
-export default function Grid({systemStarted, page}: {systemStarted: ISystemStartedResponse, page: number}) {  
+export default function Grid({systemStarted, page}: GridProps) {  
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
@@ -83,38 +88,51 @@ export default function Grid({systemStarted, page}: {systemStarted: ISystemStart
 	)
 
 	return (
-		<Box sx={{ 
-			maxWidth: '780px', 
-			margin: '0 auto',
-			marginTop: '50px',
-			position: 'relative',
-			width: '90%',
-
-		}}>
-			<DataGrid
-				autoHeight 
-				rows={systemStarted.systemStarted}
-				columns={columns}
-				slots={{ noRowsOverlay: CustomNoRowsOverlay }} 
-				hideFooter={true}
-				disableRowSelectionOnClick
-				disableColumnFilter
-				sx={{
-					alignItems: 'center',
-					backgroundColor: '#ffffff',
-					'--DataGrid-overlayHeight': '300px',
-					borderRadius: '5px 5px 0 0'
-				}}
-			/>
-			<div className='bg-white w-[90%] h-10 m-auto max-w-[780px]'>
-				<div className='w-40 h-10'>
+		<>
+			<div className='flex w-full justify-end max-w-[780px] m-auto mt-10'>
+				<div className='bg-white w-1/2 h-10 rounded flex'>
+					<div className='flex items-center space-x-1'>
+						<h2>Data Inicial:</h2>
+						<input 
+							type="date" 
+							name="Data Inicial" 
+							id="dataInicio" 
+							className='w-[110px]'
+						/>
+					</div> 
+				</div>
+			</div>
+			<Box sx={{ 
+				maxWidth: '780px', 
+				margin: '0 auto',
+				marginTop: '20px',
+				position: 'relative',
+				width: '90%'
+			}}>
+				<DataGrid
+					autoHeight 
+					rows={systemStarted.systemStarted}
+					columns={columns}
+					slots={{ noRowsOverlay: CustomNoRowsOverlay }} 
+					hideFooter={true}
+					disableRowSelectionOnClick
+					disableColumnFilter
+					sx={{
+						alignItems: 'center',
+						backgroundColor: '#ffffff',
+						'--DataGrid-overlayHeight': '300px',
+						borderRadius: '5px 5px 0 0',
+						borderWidth: '0px'
+					}}
+				/>
+				<div className='bg-white w-full h-10 mb-[50px] m-auto max-w-[780px] rounded-b-[5px]'>
 					<div className='flex justify-center h-full items-center'>
 						<button type="button" onClick={() => {
 							if(page !== 1) {
-								setPage(page - 1)
+								router.push(pathname + '?' + createQueryString('page', `${page - 1}`))
 							}
 						}}>
-							<KeyboardArrowLeftIcon fontSize='small' className='text-[#8a8a8a]'/>
+							<KeyboardArrowLeftIcon fontSize='small' className='text-[#353535]'/>
 						</button>
 
 						<button type="button" onClick={() => {
@@ -122,18 +140,18 @@ export default function Grid({systemStarted, page}: {systemStarted: ISystemStart
 								router.push(pathname + '?' + createQueryString('page', `${page + 1}`))
 							}
 						}}>
-							<KeyboardArrowRightIcon fontSize='small' className='text-[#8a8a8a]'/>
+							<KeyboardArrowRightIcon fontSize='small' className='text-[#353535]'/>
 						</button>
 
 
-						<h1 className='text-center text-sm text-[#8a8a8a]'>
+						<h1 className='text-center text-sm text-[#353535]'>
 							{((page - 1) * 20) + 1} - {page * 20 < systemStarted.total ? page * 20 : systemStarted.total} de {systemStarted.total}
 						</h1>
 					
 					</div>
 				</div>
-			</div>
-		</Box>
+			</Box>
+		</>
 	)
 }
 

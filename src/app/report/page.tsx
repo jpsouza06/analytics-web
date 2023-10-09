@@ -8,16 +8,17 @@ import React from 'react'
 export default async function State({
 	searchParams,
 }: {
-   searchParams: { [key: string]: string | string[] | undefined };
+   searchParams: { [key: string]: string | string[] | undefined};
  }) {
+	console.log(searchParams)
 	const pageNumber= searchParams['page'] ?? '1' // default value is "1"
-
-	const {data} = await POST('PA', pageNumber)
+	const state = searchParams['state']
+	const {data} = await POST(state, Number(pageNumber))
 
 	return (
 		<>
 			<div className="bg-red-700 mx-auto mt-15 w-full ">
-				<Grid systemStarted={[data, 1]}/>
+				<Grid systemStarted={data} page={Number(pageNumber)}/>
 			</div>		
 		</>
 	)
