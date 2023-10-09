@@ -28,7 +28,7 @@ export default function BrasilMap(
 	const router = useRouter()
 
 	const handleClickInsidePolygon = (state: string) => {
-		router.push(`/state/${state}`)   
+		router.push(`/report/${state}`)   
 	}
 
 	const bigNumber = BigNumber(data.score.count)

@@ -5,14 +5,19 @@ import dayjs from 'dayjs'
 
 import React from 'react'
 
-export default async function State({params}: {params : {state: string}}) {
-	const page = 1
-	const {data} = await POST(params.state, page)
+export default async function State({
+	searchParams,
+}: {
+   searchParams: { [key: string]: string | string[] | undefined };
+ }) {
+	const pageNumber= searchParams['page'] ?? '1' // default value is "1"
+
+	const {data} = await POST('PA', pageNumber)
 
 	return (
 		<>
 			<div className="bg-red-700 mx-auto mt-15 w-full ">
-				<Grid systemStarted={data}/>
+				<Grid systemStarted={[data, 1]}/>
 			</div>		
 		</>
 	)

@@ -5,9 +5,9 @@ import dayjs from 'dayjs'
 
 import React from 'react'
 
-export default async function State({params}: {params : {state: string}}) {
-	const page = 1
-	const {data} = await POST(params.state, page)
+export default async function State({params}: {params : {page: number, state: string}}) {
+	const {data} = await POST('MG', params.page)
+	console.log(params.state)
 
 	return (
 		<>

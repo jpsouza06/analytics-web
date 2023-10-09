@@ -5,7 +5,12 @@ import { Box } from '@mui/system'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 
-import React, { useState } from 'react'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+
+
+import React, { useCallback, useEffect, useState } from 'react'
+import { usePathname, useSearchParams, useRouter} from 'next/navigation'
 
 const columns:GridColDef[] = [
 	{
@@ -62,7 +67,20 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 	},
 }))
  
-export default function Grid({systemStarted}: ISystemStartedResponse) {  
+export default function Grid({systemStarted, page}: {systemStarted: ISystemStartedResponse, page: number}) {  
+	const router = useRouter()
+	const pathname = usePathname()
+	const searchParams = useSearchParams()!
+
+	const createQueryString = useCallback(
+		(name: string, value: string) => {
+			const params = new URLSearchParams(searchParams)
+			params.set(name, value)
+		
+			return params.toString()
+		},
+		[searchParams]
+	)
 
 	return (
 		<Box sx={{ 
@@ -88,6 +106,33 @@ export default function Grid({systemStarted}: ISystemStartedResponse) {
 					borderRadius: '5px 5px 0 0'
 				}}
 			/>
+			<div className='bg-white w-[90%] h-10 m-auto max-w-[780px]'>
+				<div className='w-40 h-10'>
+					<div className='flex justify-center h-full items-center'>
+						<button type="button" onClick={() => {
+							if(page !== 1) {
+								setPage(page - 1)
+							}
+						}}>
+							<KeyboardArrowLeftIcon fontSize='small' className='text-[#8a8a8a]'/>
+						</button>
+
+						<button type="button" onClick={() => {
+							if(page * 20 < systemStarted.total) {
+								router.push(pathname + '?' + createQueryString('page', `${page + 1}`))
+							}
+						}}>
+							<KeyboardArrowRightIcon fontSize='small' className='text-[#8a8a8a]'/>
+						</button>
+
+
+						<h1 className='text-center text-sm text-[#8a8a8a]'>
+							{((page - 1) * 20) + 1} - {page * 20 < systemStarted.total ? page * 20 : systemStarted.total} de {systemStarted.total}
+						</h1>
+					
+					</div>
+				</div>
+			</div>
 		</Box>
 	)
 }
