@@ -46,7 +46,7 @@ export default function Sidebar() {
 							</li>
 						</Link>
 
-						<Link href="/state/PA">
+						<Link href="/report">
 							<li className='rounded-sm hover:bg-gray-100'>
 								<div className="flex items-center pl-1 mb-1 space-x-2 rounded-md">
 									<TimelineIcon fontSize='medium'/>

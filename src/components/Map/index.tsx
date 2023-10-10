@@ -7,7 +7,6 @@ import {statesData} from  '../../../brasil'
 
 import {LatLngExpression} from 'leaflet/index'
 
-import './style.css'
 import { ISystemStartedCountByStateResponse } from '@/interface/system-started'
 
 function BigNumber(data: [{_count: number, estado: string}]) {
@@ -28,7 +27,7 @@ export default function BrasilMap(
 	const router = useRouter()
 
 	const handleClickInsidePolygon = (state: string) => {
-		router.push(`/report?page=1?state=${state}`)   
+		router.push(`/report?page=1&estado=${state}`)   
 	}
 
 	const bigNumber = BigNumber(data.score.count)
@@ -74,7 +73,7 @@ export default function BrasilMap(
 					
 					return (
 						<Polygon
-							className="no-focus"
+							className='focus:outline-none'
 							key={state.properties.id}
 							pathOptions={{
 								fillColor: fillColor,

@@ -8,23 +8,30 @@ import React from 'react'
 export default async function State({
 	searchParams,
 }: {
-   searchParams: { [key: string]: string | string[] | undefined};
+   searchParams: { [key: string]: string};
  }) {
-	console.log(searchParams)
 	const pageNumber= searchParams['page'] ?? '1' // default value is "1"
-	const state = searchParams['state']
-	const {data} = await POST(state, Number(pageNumber))
+	const estado = searchParams['estado']
+	const dataInicio = searchParams['dataInicio']
+	const dataFim = searchParams['dataFim']
+	const {data} = await POST(estado, Number(pageNumber), dataInicio, dataFim)
 
 	return (
 		<>
 			<div className="bg-red-700 mx-auto mt-15 w-full ">
-				<Grid systemStarted={data} page={Number(pageNumber)}/>
+				<Grid 
+					systemStarted={data} 
+					page={Number(pageNumber)} 
+					dataInicio={dataInicio ? dataInicio : ''} 
+					dataFim={dataFim ? dataFim : ''} 
+					estado={estado ? estado : ''}
+				/>
 			</div>		
 		</>
 	)
 }
  
-async function POST(state: string, page: number) {
+async function POST(estado: string, page: number, dataInicio: string, dataFim: string) {
 	const response = 
 		await fetch(`${process.env.API_BASE_URL}/system-started/query/${page}`, 
 			{
@@ -34,13 +41,13 @@ async function POST(state: string, page: number) {
 				},
 				body: JSON.stringify(
 					{ 
-						estado: state,
-						dataInicio: '01-01-2000',
+						estado,
+						dataInicio,
+						dataFim,
 						// orderBy: {
 						// 	createdAt: 'desc'
 						// }
-					}),
-				next: { revalidate: 60 },
+					})
 			})
 
 	if (response.status !== 200) {

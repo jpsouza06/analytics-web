@@ -8,7 +8,7 @@ const config: Config = {
 	],
 	theme: {
 		dropShadow: {
-			'drop-shadow-50': 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.5))'
+			'drop-shadow-50': 'drop-shadow(15px 15px 4px rgba(0, 0, 0, 1))'
 		},
 		colors: {
 			'red-700': '#871812',
