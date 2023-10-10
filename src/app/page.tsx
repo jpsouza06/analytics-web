@@ -1,13 +1,13 @@
 import React from 'react'
 import 'leaflet/dist/leaflet.css'
 
-import { POST } from './api/route'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import Chart from '@/components/BarChart'
+import { ISystemStartedCountByStateResponse } from '@/interface/system-started'
 const BrasilMap = dynamic(() => import('@/components/Map'), {
 	ssr: false 
 })
@@ -50,4 +50,26 @@ export default async function HomePage() {
 			</div>
 		</>
 	)
+}
+
+async function POST() {
+	const response = 
+	await fetch(`${process.env.API_BASE_URL}/system-started/query/count`, 
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(
+				{ 
+					dataInicio: '01-01-2000',
+				}),
+			next: { revalidate: 600 },
+		})
+
+	const data: ISystemStartedCountByStateResponse = await response.json()
+
+	return {
+		data
+	}
 }

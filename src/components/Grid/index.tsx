@@ -68,7 +68,7 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 }))
 
 interface GridProps {
-	systemStarted: ISystemStartedResponse;
+	systemStarted: ISystemStartedResponse | { systemStarted: never[]; total: number; };
 	page: number;
 	dataInicio: string;
 	dataFim: string;
@@ -76,14 +76,18 @@ interface GridProps {
 }
  
 export default function Grid({systemStarted, page, dataInicio, dataFim, estado}: GridProps) {  
+	const [dataInicioInput, setDataInicioInput] = useState('')
+	const [dataFimInput, setDataFimInput] = useState('')
+	const [estadoInput, setEstadoInput] = useState('')
+
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()!
 
 	useEffect(() => {
-		{dataInicio !== '' && (document.getElementById('dataInicio').value = dataInicio)}
-		{dataFim !== '' && (document.getElementById('dataFim').value = dataFim)}
-		{estado !== '' && (document.getElementById('estado').value = estado)}
+		{dataInicio !== '' && (setDataInicioInput(dataInicio))}
+		{dataFim !== '' && (setDataFimInput(dataFim))}
+		{estado !== '' && (setEstadoInput(estado))}
 	}, [])
 
 	const createQueryString = useCallback(
@@ -98,16 +102,16 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 
 	function onSearchCliclk() {
 		let queryParams = ''
-		if(document.getElementById('dataInicio').value !== '') {
-			queryParams = 'dataInicio' + '=' + `${document.getElementById('dataInicio').value}`
+		if(dataInicioInput !== '') {
+			queryParams = 'dataInicio' + '=' + `${dataInicioInput}`
 		}
 
-		if(document.getElementById('dataFim').value !== '') {
-			queryParams = queryParams + '&' + 'dataFim' + '=' + `${document.getElementById('dataFim').value}`
+		if(dataFimInput !== '') {
+			queryParams = queryParams + '&' + 'dataFim' + '=' + `${dataFimInput}`
 		}
 
-		if(document.getElementById('estado').value !== '') {
-			queryParams = queryParams + '&' + 'estado' + '=' + `${document.getElementById('estado').value}`
+		if(estadoInput !== '') {
+			queryParams = queryParams + '&' + 'estado' + '=' + `${estadoInput}`
 		}
 		
 		router.push(pathname + '?' + queryParams)
@@ -122,20 +126,35 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							type='date' 
 							name='Data Inicial' 
 							id='dataInicio' 
+							value={dataInicioInput}
+							onChange={(e) => {
+								setDataInicioInput(e.target.value)
+							}}
 							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
 						/>
 						<h2>a</h2>
 						<input 
 							type='date' 
-							
 							name='Data final' 
 							id='dataFim' 
+							value={dataFimInput}
+							onChange={(e) => {
+								setDataFimInput(e.target.value)
+							}}
 							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
 						/>
 
 						<h2>Estado: </h2>
 
-						<select id='estado' name='estado' className='w-[130px] border-[1px] shadow-md p-1 bg-white focus:outline-none '>
+						<select 
+							id='estado' 
+							name='estado' 
+							className='w-[130px] border-[1px] shadow-md p-1 bg-white focus:outline-none'
+							value={estadoInput}
+							onChange={(e) => {
+								setEstadoInput(e.target.value)
+							}}
+						>
 							<option value=''>Todos</option>
 							<option value='AC'>Acre</option>
 							<option value='AL'>Alagoas</option>
@@ -166,7 +185,9 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							<option value='TO'>Tocantins</option>
 						</select>
 
-						<SearchIcon fontSize='medium' className='hover:bg-gray-100 cursor-pointer' onClick={() => onSearchCliclk()}/>
+						<div>
+							<SearchIcon fontSize='medium' className='hover:bg-gray-100 cursor-pointer' onClick={() => onSearchCliclk()}/>
+						</div>
 					</div> 
 				</div>
 			</div>
