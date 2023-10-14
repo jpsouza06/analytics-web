@@ -21,10 +21,6 @@ export default async function State({
 			<div className="bg-red-700 mx-auto mt-15 w-full ">
 				<Grid 
 					systemStarted={data} 
-					page={Number(pageNumber)} 
-					dataInicio={dataInicio ? dataInicio : ''} 
-					dataFim={dataFim ? dataFim : ''} 
-					estado={estado ? estado : ''}
 				/>
 			</div>		
 		</>
@@ -44,10 +40,12 @@ async function POST(estado: string, page: number, dataInicio: string, dataFim: s
 						estado,
 						dataInicio,
 						dataFim,
-						// orderBy: {
-						// 	createdAt: 'desc'
-						// }
-					})
+						orderBy: {
+							createdAt: 'desc'
+						}
+					}
+				),
+				cache: 'no-cache'
 			})
 
 	if (response.status !== 200) {

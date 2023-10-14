@@ -6,10 +6,8 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import SearchIcon from '@mui/icons-material/Search'
 
-
-import React, { useCallback, useEffect, useState} from 'react'
+import React, { useCallback} from 'react'
 import { usePathname, useSearchParams, useRouter} from 'next/navigation'
 
 const columns:GridColDef[] = [
@@ -69,53 +67,33 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 
 interface GridProps {
 	systemStarted: ISystemStartedResponse | { systemStarted: never[]; total: number; };
-	page: number;
-	dataInicio: string;
-	dataFim: string;
-	estado: string;
 }
  
-export default function Grid({systemStarted, page, dataInicio, dataFim, estado}: GridProps) {  
-	const [dataInicioInput, setDataInicioInput] = useState('')
-	const [dataFimInput, setDataFimInput] = useState('')
-	const [estadoInput, setEstadoInput] = useState('')
-
+export default function Grid({systemStarted}: GridProps) {  
 	const router = useRouter()
 	const pathname = usePathname()
-	const searchParams = useSearchParams()!
+	const searchParams = useSearchParams()
 
-	useEffect(() => {
-		{dataInicio !== '' && (setDataInicioInput(dataInicio))}
-		{dataFim !== '' && (setDataFimInput(dataFim))}
-		{estado !== '' && (setEstadoInput(estado))}
-	}, [])
+	const page = Number(searchParams.get('page')) || 1
+	const dataInicio = searchParams.get('dataInicio') || ''
+	const dataFim = searchParams.get('dataFim') || ''
+	const estado = searchParams.get('estado') || ''
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
 			const params = new URLSearchParams(searchParams)
-			params.set(name, value)
-		
+			console.log(value)
+			if (value !== '') {
+				params.set(name, value)
+			} else {
+				params.delete(name)
+			}
+			
 			return params.toString()
 		},
 		[searchParams]
 	)
 
-	function onSearchCliclk() {
-		let queryParams = ''
-		if(dataInicioInput !== '') {
-			queryParams = 'dataInicio' + '=' + `${dataInicioInput}`
-		}
-
-		if(dataFimInput !== '') {
-			queryParams = queryParams + '&' + 'dataFim' + '=' + `${dataFimInput}`
-		}
-
-		if(estadoInput !== '') {
-			queryParams = queryParams + '&' + 'estado' + '=' + `${estadoInput}`
-		}
-		
-		router.push(pathname + '?' + queryParams)
-	}
 	return (
 		<>
 			<div className='flex w-full justify-end max-w-[780px] m-auto mt-10'>
@@ -126,9 +104,9 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							type='date' 
 							name='Data Inicial' 
 							id='dataInicio' 
-							value={dataInicioInput}
+							value={dataInicio}
 							onChange={(e) => {
-								setDataInicioInput(e.target.value)
+								router.push(pathname + '?' + createQueryString('dataInicio', `${e.target.value}`))
 							}}
 							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
 						/>
@@ -137,9 +115,9 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							type='date' 
 							name='Data final' 
 							id='dataFim' 
-							value={dataFimInput}
+							value={dataFim}
 							onChange={(e) => {
-								setDataFimInput(e.target.value)
+								router.push(pathname + '?' + createQueryString('dataFim', `${e.target.value}`))
 							}}
 							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
 						/>
@@ -150,9 +128,9 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							id='estado' 
 							name='estado' 
 							className='w-[130px] border-[1px] shadow-md p-1 bg-white focus:outline-none'
-							value={estadoInput}
+							value={estado}
 							onChange={(e) => {
-								setEstadoInput(e.target.value)
+								router.push(pathname + '?' + createQueryString('estado', `${e.target.value}`))
 							}}
 						>
 							<option value=''>Todos</option>
@@ -184,10 +162,6 @@ export default function Grid({systemStarted, page, dataInicio, dataFim, estado}:
 							<option value='SE'>Sergipe</option>
 							<option value='TO'>Tocantins</option>
 						</select>
-
-						<div>
-							<SearchIcon fontSize='medium' className='hover:bg-gray-100 cursor-pointer' onClick={() => onSearchCliclk()}/>
-						</div>
 					</div> 
 				</div>
 			</div>

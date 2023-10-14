@@ -30,7 +30,7 @@ async function POST() {
 				{ 
 					dataInicio: '01-01-2000',
 				}),
-			next: { revalidate: 600 },
+			next: {revalidate: 30}
 		})
 
 	const data: ISystemStartedCountByStateResponse = await response.json()
