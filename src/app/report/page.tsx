@@ -28,6 +28,23 @@ export default async function State({
 }
  
 async function POST(estado: string, page: number, dataInicio: string, dataFim: string) {
+	
+	const requestBody: {
+		estado?: string, dataInicio?: string, dataFim?: string
+	} = {}
+	
+	if (estado !== undefined && estado !== '') {
+		requestBody.estado = estado
+	}
+
+	if (dataInicio !== undefined && dataInicio !== '') {
+		requestBody.dataInicio = dataInicio
+	}
+
+	if (dataFim !== undefined && dataFim !== '') {
+		requestBody.dataFim = dataFim
+	}
+
 	const response = 
 		await fetch(`${process.env.API_BASE_URL}/system-started/query/${page}`, 
 			{
@@ -36,14 +53,7 @@ async function POST(estado: string, page: number, dataInicio: string, dataFim: s
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(
-					{ 
-						estado,
-						dataInicio,
-						dataFim,
-						orderBy: {
-							createdAt: 'desc'
-						}
-					}
+					requestBody
 				),
 				cache: 'no-cache'
 			})
