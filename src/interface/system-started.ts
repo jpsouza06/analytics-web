@@ -13,21 +13,6 @@ export interface IFindSystemStartedQuery {
    }
 }
 
-export interface ISystemStartedResponse {
-
-		systemStarted: [
-			{
-				id: string
-				estado: string
-				modulo: string
-				filial: string
-				createdAt: Date | string
-			}
-		] | [],
-		total: number
-	
-}
-
 export interface ISystemStartedCountByStateResponse {
 	score: {
 		count: [

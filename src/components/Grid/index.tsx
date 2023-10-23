@@ -1,45 +1,16 @@
 'use client'
-import { ISystemStartedResponse } from '@/interface/system-started'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/system'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
 import React, { useCallback} from 'react'
 import { usePathname, useSearchParams, useRouter} from 'next/navigation'
-
-const columns:GridColDef[] = [
-	{
-		field: 'filial',
-		headerName: 'Filial',
-		width: 150,
-		sortable: false,
-		disableColumnMenu: true
-	},
-	{
-		field: 'modulo',
-		headerName: 'Modulo',
-		width: 150,
-		sortable: false,
-		disableColumnMenu: true
-	},
-	{
-		field: 'estado',
-		headerName: 'Estado',
-		width: 90,
-		sortable: false,
-		disableColumnMenu: true
-	},
-	{
-		field: 'createdAt',
-		headerName: 'Ultimo Acesso',
-		width: 115,
-		sortable: false,
-		disableColumnMenu: true
-	}
-]
+import GridFilter from '../GridFilter'
+import { columnsReportTypeError, columnsReportTypePageView, columnsReportTypeSystemStarted } from '@/lib/GridColumns'
+import { IGridResponse } from '@/interface/grid'
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
 	display: 'flex',
@@ -66,23 +37,40 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
 }))
 
 interface GridProps {
-	systemStarted: ISystemStartedResponse | { systemStarted: never[]; total: number; };
+	data: IGridResponse
+	reportType: string
 }
  
-export default function Grid({systemStarted}: GridProps) {  
+export default function Grid({data, reportType}: GridProps) {  
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 
 	const page = Number(searchParams.get('page')) || 1
-	const dataInicio = searchParams.get('dataInicio') || ''
-	const dataFim = searchParams.get('dataFim') || ''
-	const estado = searchParams.get('estado') || ''
+
+	function DefineColumnsField () {
+		switch(reportType) {
+		case ('system-started') : return columnsReportTypeSystemStarted	
+		case('page-view') : return columnsReportTypePageView
+		case('error') : return columnsReportTypeError
+		default : return columnsReportTypePageView
+		}
+	}
+
+	function DefineRowsField () {
+		if ('systemStarted' in data) {
+			return data.systemStarted
+		} else if ('pageViews' in data) {
+			return data.pageViews
+		} else {
+			return data.errors
+		}
+	}
 
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
 			const params = new URLSearchParams(searchParams)
-			console.log(value)
+
 			if (value !== '') {
 				params.set(name, value)
 			} else {
@@ -96,75 +84,7 @@ export default function Grid({systemStarted}: GridProps) {
 
 	return (
 		<>
-			<div className='flex w-full justify-end max-w-[780px] m-auto mt-10'>
-				<div className='bg-white h-15 flex rounded-sm'>
-					<div className='flex items-center space-x-3 p-3' >
-						<h2>Data:</h2>
-						<input 
-							type='date' 
-							name='Data Inicial' 
-							id='dataInicio' 
-							value={dataInicio}
-							onChange={(e) => {
-								router.push(pathname + '?' + createQueryString('dataInicio', `${e.target.value}`))
-							}}
-							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
-						/>
-						<h2>a</h2>
-						<input 
-							type='date' 
-							name='Data final' 
-							id='dataFim' 
-							value={dataFim}
-							onChange={(e) => {
-								router.push(pathname + '?' + createQueryString('dataFim', `${e.target.value}`))
-							}}
-							className='w-[130px] border-[1px] shadow-md p-1 focus:outline-none'
-						/>
-
-						<h2>Estado: </h2>
-
-						<select 
-							id='estado' 
-							name='estado' 
-							className='w-[130px] border-[1px] shadow-md p-1 bg-white focus:outline-none'
-							value={estado}
-							onChange={(e) => {
-								router.push(pathname + '?' + createQueryString('estado', `${e.target.value}`))
-							}}
-						>
-							<option value=''>Todos</option>
-							<option value='AC'>Acre</option>
-							<option value='AL'>Alagoas</option>
-							<option value='AP'>Amapá</option>
-							<option value='AM'>Amazonas</option>
-							<option value='BA'>Bahia</option>
-							<option value='CE'>Ceará</option>
-							<option value='DF'>Distrito Federal</option>
-							<option value='ES'>Espírito Santo</option>
-							<option value='GO'>Goiás</option>
-							<option value='MA'>Maranhão</option>
-							<option value='MT'>Mato Grosso</option>
-							<option value='MS'>Mato Grosso do Sul</option>
-							<option value='MG'>Minas Gerais</option>
-							<option value='PA'>Pará</option>
-							<option value='PB'>Paraíba</option>
-							<option value='PR'>Paraná</option>
-							<option value='PE'>Pernambuco</option>
-							<option value='PI'>Piauí</option>
-							<option value='RJ'>Rio de Janeiro</option>
-							<option value='RN'>Rio Grande do Norte</option>
-							<option value='RS'>Rio Grande do Sul</option>
-							<option value='RO'>Rondônia</option>
-							<option value='RR'>Roraima</option>
-							<option value='SC'>Santa Catarina</option>
-							<option value='SP'>São Paulo</option>
-							<option value='SE'>Sergipe</option>
-							<option value='TO'>Tocantins</option>
-						</select>
-					</div> 
-				</div>
-			</div>
+			<GridFilter />
 
 			<Box sx={{ 
 				maxWidth: '780px', 
@@ -175,8 +95,8 @@ export default function Grid({systemStarted}: GridProps) {
 			}}>
 				<DataGrid
 					autoHeight 
-					rows={systemStarted.systemStarted}
-					columns={columns}
+					rows={DefineRowsField()}
+					columns={DefineColumnsField()}
 					slots={{ noRowsOverlay: CustomNoRowsOverlay }} 
 					hideFooter={true}
 					disableRowSelectionOnClick
@@ -200,7 +120,7 @@ export default function Grid({systemStarted}: GridProps) {
 						</button>
 
 						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
-							if(page * 20 < systemStarted.total) {
+							if(page * 20 < data.total) {
 								router.push(pathname + '?' + createQueryString('page', `${page + 1}`))
 							}
 						}}>
@@ -209,7 +129,7 @@ export default function Grid({systemStarted}: GridProps) {
 
 
 						<h1 className='text-center text-sm text-[#353535]'>
-							{systemStarted.total === 0 ? ((page - 1) * 20) : (((page - 1) * 20) + 1)} - {page * 20 < systemStarted.total ? page * 20 : systemStarted.total} de {systemStarted.total}
+							{data.total === 0 ? ((page - 1) * 20) : (((page - 1) * 20) + 1)} - {page * 20 < data.total ? page * 20 : data.total} de {data.total}
 						</h1>
 					
 					</div>
