@@ -53,7 +53,6 @@ export default async function HomePage() {
 }
 
 async function POST() {
-	console.log(process.env.API_BASE_URL)
 	const response = 
 	await fetch(`${process.env.API_BASE_URL}/system-started/query/count`, 
 		{
@@ -61,15 +60,11 @@ async function POST() {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(
-				{ 
-					dataInicio: '01-01-2000',
-				}),
+			body: JSON.stringify({}),
 			next: {revalidate: 30}
 		})
 
 	const data: ISystemStartedCountByStateResponse = await response.json()
-	console.log(data)
 	return {
 		data
 	}
