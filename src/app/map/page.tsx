@@ -26,6 +26,7 @@ async function POST() {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			body: JSON.stringify({}),
 			next: {revalidate: 30}
 		})
 
