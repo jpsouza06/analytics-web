@@ -2,7 +2,7 @@ export interface IFindSystemStartedQuery {
    estado?: string
    modulo?: string
    filial?: string
-   dataInicio: string;
+   dataInicio?: string;
    dataFim?: string;
    orderBy?:
    {

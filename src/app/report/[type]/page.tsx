@@ -64,7 +64,7 @@ async function POST(
 	if (dataFim !== undefined && dataFim !== '') {
 		requestBody.dataFim = dataFim
 	}
-	console.log(urlRoute)
+
 	const response = 
 		await fetch(`${process.env.API_BASE_URL}/${urlRoute}/query/${page}`, 
 			{

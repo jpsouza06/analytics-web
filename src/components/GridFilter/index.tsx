@@ -14,7 +14,7 @@ export default function GridFilter() {
 	const createQueryString = useCallback(
 		(name: string, value: string) => {
 			const params = new URLSearchParams(searchParams)
-			console.log(value)
+			
 			if (value !== '') {
 				params.set(name, value)
 			} else {
