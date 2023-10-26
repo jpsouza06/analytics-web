@@ -2,6 +2,9 @@
   "name": "analytics-web",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "react": "18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

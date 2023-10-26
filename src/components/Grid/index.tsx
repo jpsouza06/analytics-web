@@ -87,7 +87,7 @@ export default function Grid({data, reportType}: GridProps) {
 			<GridFilter />
 
 			<Box sx={{ 
-				maxWidth: '780px', 
+				maxWidth: '850px', 
 				margin: '0 auto',
 				marginTop: '20px',
 				position: 'relative',
@@ -109,7 +109,7 @@ export default function Grid({data, reportType}: GridProps) {
 						borderWidth: '0px'
 					}}
 				/>
-				<div className='bg-white w-full h-10 mb-[50px] m-auto max-w-[780px] rounded-b-[2px]'>
+				<div className='bg-white w-full h-10 mb-[50px] m-auto max-w-[850px] rounded-b-[2px]'>
 					<div className='flex justify-center h-full items-center'>
 						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
 							if(page !== 1) {

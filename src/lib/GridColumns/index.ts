@@ -1,10 +1,11 @@
 import { GridColDef } from '@mui/x-data-grid'
+import dayjs from 'dayjs'
 
 export const columnsReportTypeSystemStarted:GridColDef[] = [
 	{
 		field: 'filial',
 		headerName: 'Filial',
-		width: 150,
+		minWidth: 300, 
 		sortable: false,
 		disableColumnMenu: true
 	},
@@ -26,6 +27,7 @@ export const columnsReportTypeSystemStarted:GridColDef[] = [
 		field: 'createdAt',
 		headerName: 'Ultimo Acesso',
 		width: 115,
+		valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY'),
 		sortable: false,
 		disableColumnMenu: true
 	}
@@ -34,7 +36,7 @@ export const columnsReportTypeSystemStarted:GridColDef[] = [
 export const columnsReportTypePageView:GridColDef[] = [
 	{
 		field: 'rotina',
-		headerName: 'Filial',
+		headerName: 'Rotina',
 		width: 150,
 		sortable: false,
 		disableColumnMenu: true
@@ -50,6 +52,7 @@ export const columnsReportTypePageView:GridColDef[] = [
 		field: 'createdAt',
 		headerName: 'Ultimo Acesso',
 		width: 115,
+		valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY'),
 		sortable: false,
 		disableColumnMenu: true
 	}
@@ -88,6 +91,7 @@ export const columnsReportTypeError:GridColDef[] = [
 		field: 'createdAt',
 		headerName: 'Ultimo Acesso',
 		width: 115,
+		valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY'),
 		sortable: false,
 		disableColumnMenu: true
 	}
