@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  analytics-web:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - API_BASE_URL=http://analytics-7aqp.onrender.com
