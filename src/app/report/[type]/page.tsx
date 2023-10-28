@@ -47,13 +47,10 @@ async function getReportDataByQuery(
 	dataFim: string,
 	page: number, 
 ) {
-	/*
-	
-	*/
 	const requestBody: {
 		estado?: string, modulo?: string, dataInicio?: string, dataFim?: string
 	} = {}
-	
+	//Validações para não enviar campos vazios para a query
 	if (estado !== undefined && estado !== '') {
 		requestBody.estado = estado
 	}
