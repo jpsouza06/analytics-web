@@ -7,6 +7,7 @@ import Loading from './loading'
 import Header from '@/components/Header'
 import { Context } from './context'
 import { env } from '@/env'
+import Header2 from '@/components/Header2'
 
 export const metadata: Metadata = {
 	title: env.NEXT_PUBLIC_SITE_NAME,
@@ -24,13 +25,13 @@ export default async function RootLayout({
 }) {
 	return (
 		<html lang="pt">
-			<body className={`${inter.className} flex`}>
+			<body className={`${inter.className}`}>
 				<Context>				
-					<Sidebar />			
-					
+
+					<Header2 />
 					<Suspense fallback={<Loading />}>								
-						<div className="bg-red-700 mx-auto mt-15 w-full">
-							<Header />
+						<div className="bg-red-700 mx-auto mt-15 h-full">
+	
 							{children}
 						</div>
 					</Suspense>
