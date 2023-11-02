@@ -61,7 +61,7 @@ async function POST() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({}),
-			next: {revalidate: 30}
+			cache: 'no-cache'
 		})
 
 	const data: ISystemStartedCountByStateResponse = await response.json()
