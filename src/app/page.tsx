@@ -6,14 +6,33 @@ import Link from 'next/link'
 
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
-import Chart from '@/components/BarChart'
 import { ISystemStartedCountByStateResponse } from '@/interface/system-started'
+
+import { api } from '@/data/api'
+
+import Chart from '@/components/BarChart'
 const BrasilMap = dynamic(() => import('@/components/Map'), {
 	ssr: false 
 })
 
+async function getSystemStartedCount() {
+	const response = await api('/system-started/query/count', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({}),
+		next: {revalidate: 30}
+	})
+
+	const data: ISystemStartedCountByStateResponse = await response.json()
+
+	return data
+}
+
 export default async function HomePage() {
-	const {data} = await POST()
+	const data = await getSystemStartedCount()
+
 	return (
 		<>	
 			<div className="grid grid-cols-2 gap-6 max-w-5xl h-[25rem] m-auto my-10">
@@ -50,22 +69,4 @@ export default async function HomePage() {
 			</div>
 		</>
 	)
-}
-
-async function POST() {
-	const response = 
-	await fetch(`${process.env.API_BASE_URL}/system-started/query/count`, 
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({}),
-			cache: 'no-cache'
-		})
-
-	const data: ISystemStartedCountByStateResponse = await response.json()
-	return {
-		data
-	}
 }

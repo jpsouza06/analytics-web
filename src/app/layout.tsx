@@ -6,9 +6,10 @@ import Sidebar from '@/components/Sidebar'
 import Loading from './loading'
 import Header from '@/components/Header'
 import { Context } from './context'
+import { env } from '@/env'
 
 export const metadata: Metadata = {
-	title: process.env.SITE_NAME,
+	title: env.NEXT_PUBLIC_SITE_NAME,
 }
 
 const inter = Inter({
@@ -22,7 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="pt">
 			<body className={`${inter.className} flex`}>
 				<Context>				
 					<Sidebar />			
