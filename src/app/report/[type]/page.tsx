@@ -1,6 +1,7 @@
 import Grid from '@/components/Grid'
 import { api } from '@/data/api'
 import { IGridResponse } from '@/interface/grid'
+import dayjs from 'dayjs'
 
 import React from 'react'
 
@@ -30,12 +31,12 @@ export default async function Report({
 	)
 
 	return (
-		<div className="bg-red-700 mx-auto mt-15 w-full ">
-			<Grid 
-				data={data}
-				reportType={`${params.type}`}
-			/>
-		</div>		
+
+		<Grid 
+			data={data}
+			reportType={`${params.type}`}
+		/>
+	
 	)
 }
  
@@ -60,11 +61,11 @@ async function getReportDataByQuery(
 	}
 
 	if (dataInicio !== undefined && dataInicio !== '') {
-		requestBody.dataInicio = dataInicio
+		requestBody.dataInicio = dayjs(dataInicio, 'YYYY/MM/DD').format('YYYY-MM-DDT00:00:00')
 	}
-
+	
 	if (dataFim !== undefined && dataFim !== '') {
-		requestBody.dataFim = dataFim
+		requestBody.dataFim = dayjs(dataFim, 'YYYY/MM/DD').format('YYYY-MM-DDT23:59:59')
 	}
 
 	const response = await api(`/${urlRoute}/query/${page}`, {
