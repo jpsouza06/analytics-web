@@ -40,7 +40,9 @@ export default function BrasilMap(
 				{ 
 					width: '100%', 
 					height:'100%',
-					border: '1px solid #00000010 '
+					border: '1px solid #00000010',
+					position: 'unset',
+					zIndex: '10' 
 				}}
 			scrollWheelZoom={mapInteraction}
 			zoomControl={mapInteraction}

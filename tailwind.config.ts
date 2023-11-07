@@ -13,7 +13,7 @@ const config: Config = {
 		colors: {
 			'red-700': '#871812',
 			'white': '#ffffff',
-			'gray-100': '#CCCCCC'
+			'gray-100': '#CCCCCC50'
 		}
 	},
 	plugins: [],
