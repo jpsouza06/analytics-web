@@ -2,10 +2,11 @@
 import React, { useState } from 'react'
 
 import AnalyticsIcon from '@mui/icons-material/Analytics'
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-
 
 import Link from 'next/link'
+import Image from 'next/image'
+
+import arrow from '../../../public/images/arrow.png'
 
 export default function Header2() {
 	const [open, setOpen] = useState(false)
@@ -15,9 +16,7 @@ export default function Header2() {
 			<div className="flex items-end max-w-[1400px] w-4/5 space-x-16">
 				<Link href="/">
 					<div className="flex items-center space-x-1">
-						<AnalyticsIcon 
-							className='text-4xl'
-						/>
+						<AnalyticsIcon fontSize='large'/>
 						<h1 className={'text-4xl'}>Analytics</h1>
 					</div>
 				</Link>
@@ -35,12 +34,15 @@ export default function Header2() {
 						<li className='rounded-sm'>
 							<div className=" pl-1 mb-1 ">
 
-
 								<div className='flex items-center hover:bg-gray-100 cursor-pointer' onClick={() => setOpen(!open)}>						
 									Relatórios
-									<KeyboardArrowRightIcon   
+									<Image
+										src={arrow}
+										alt=''
+										width={14}
+										height={14}   
 										className={`
-											font-inter 
+											ml-2
 											duration-300 
 											transition-transform 
 											${open ? 'rotate-90': 'rotate-0'}`
