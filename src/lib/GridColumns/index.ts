@@ -5,28 +5,28 @@ export const columnsReportTypeSystemStarted:GridColDef[] = [
 	{
 		field: 'codCliente',
 		headerName: 'Código Cliente',
-		width: 150, 
+		width:125, 
 		sortable: false,
 		disableColumnMenu: true
 	},
 	{
 		field: 'estado',
 		headerName: 'Estado',
-		width: 90,
+		width: 70,
 		sortable: false,
 		disableColumnMenu: true
 	},
 	{
 		field: 'cidade',
 		headerName: 'Cidade',
-		width: 150,
+		width: 200,
 		sortable: false,
 		disableColumnMenu: true
 	},
 	{
 		field: 'modulo',
 		headerName: 'Modulo',
-		width: 100,
+		width: 70,
 		sortable: false,
 		disableColumnMenu: true
 	},
@@ -51,21 +51,21 @@ export const columnsReportTypePageView:GridColDef[] = [
 	{
 		field: 'codCliente',
 		headerName: 'Código Cliente',
-		width: 150, 
+		width: 125, 
 		sortable: false,
 		disableColumnMenu: true
 	},
 	{
 		field: 'rotina',
 		headerName: 'Rotina',
-		width: 150,
+		width: 300,
 		sortable: false,
 		disableColumnMenu: true
 	},
 	{
 		field: 'modulo',
 		headerName: 'Modulo',
-		width: 100,
+		width: 70,
 		sortable: false,
 		disableColumnMenu: true
 	},

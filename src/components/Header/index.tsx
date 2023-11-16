@@ -34,7 +34,7 @@ export default function Header2() {
 						<li className='rounded-sm'>
 							<div className=" pl-1 mb-1">
 
-								<div className='flex items-center hover:bg-gray-100 cursor-pointer' onMouseEnter={() => setOpen(!open)}>						
+								<div className='flex items-center hover:bg-gray-100 cursor-pointer' onMouseEnter={() => setOpen(true)}>						
 									Relatórios
 									<Image
 										src={arrow}

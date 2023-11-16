@@ -4,7 +4,10 @@ import { Box } from '@mui/system'
 import { DataGrid } from '@mui/x-data-grid'
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
+
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
 import React, { useCallback} from 'react'
 import { usePathname, useSearchParams, useRouter} from 'next/navigation'
@@ -113,10 +116,18 @@ export default function Grid({data, reportType}: GridProps) {
 					<div className='flex justify-center h-full items-center'>
 						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
 							if(page !== 1) {
+								router.push(pathname + '?' + createQueryString('page', `${1}`))
+							}
+						}}>
+							<KeyboardDoubleArrowLeftIcon fontSize='small' className='text-[#353535]'/>						
+						</button>
+
+						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
+							if(page !== 1) {
 								router.push(pathname + '?' + createQueryString('page', `${page - 1}`))
 							}
 						}}>
-							<KeyboardArrowLeftIcon fontSize='small' className='text-[#353535]'/>
+							<KeyboardArrowLeftIcon fontSize='small' className='text-[#353535]'/>							
 						</button>
 
 						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
@@ -127,6 +138,13 @@ export default function Grid({data, reportType}: GridProps) {
 							<KeyboardArrowRightIcon fontSize='small' className='text-[#353535]'/>
 						</button>
 
+						<button type='button' className='h-[20px] inline-flex items-center hover:bg-gray-100' onClick={() => {
+							if(page * 20 < data.total) {
+								router.push(pathname + '?' + createQueryString('page', `${Math.ceil(data.total/20)}`))
+							}
+						}}>
+							<KeyboardDoubleArrowRightIcon fontSize='small' className='text-[#353535]'/>
+						</button>
 
 						<h1 className='text-center text-sm text-[#353535]'>
 							{data.total === 0 ? ((page - 1) * 20) : (((page - 1) * 20) + 1)} - {page * 20 < data.total ? page * 20 : data.total} de {data.total}
